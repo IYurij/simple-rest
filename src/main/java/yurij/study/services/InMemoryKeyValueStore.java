@@ -1,6 +1,7 @@
 package yurij.study.services;
 
 import org.springframework.stereotype.Service;
+import yurij.study.entity.StoreEntry;
 
 import java.util.HashMap;
 
@@ -17,8 +18,10 @@ public class InMemoryKeyValueStore {
      * @param key String
      * @param value String
      */
-    public void put(String key, String value) {
+    public StoreEntry put(String key, String value) {
         store.put(key, value);
+
+        return new StoreEntry(key, value);
     }
 
     /**
@@ -26,8 +29,10 @@ public class InMemoryKeyValueStore {
      * @param key String
      * @return String
      */
-    public String get(String key) {
-        return store.get(key);
+    public StoreEntry get(String key) {
+        String value = store.get(key);
+
+        return new StoreEntry(key, value);
     }
 
     /**

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base API controller class.
+ * API message controller class.
  */
 @RestController
 @RequestMapping("message")
