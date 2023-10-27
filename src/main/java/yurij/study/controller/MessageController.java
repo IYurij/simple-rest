@@ -1,12 +1,11 @@
 package yurij.study.controller;
 
 import org.springframework.web.bind.annotation.*;
+import yurij.study.entity.Message;
 import yurij.study.exceptions.NotFoundExeption;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Base API controller class.
@@ -21,10 +20,10 @@ public class MessageController {
     /**
      * Base data stub.
      */
-    private final List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {{
-        add(new HashMap<String, String>() {{ put("id", "1"); put("text", "First message."); }});
-        add(new HashMap<String, String>() {{ put("id", "2"); put("text", "Second message."); }});
-        add(new HashMap<String, String>() {{ put("id", "3"); put("text", "Third message."); }});
+    private final List<Message> messages = new ArrayList<>() {{
+        add(new Message("1", "First message."));
+        add(new Message("2", "Second message."));
+        add(new Message("3", "Third message."));
     }};
 
     /**
@@ -32,7 +31,7 @@ public class MessageController {
      * @return messages list
      */
     @GetMapping
-    public List<Map<String, String>> list() {
+    public List<Message> list() {
         return messages;
     }
 
@@ -42,7 +41,7 @@ public class MessageController {
      * @return message Json object
      */
     @GetMapping("{id}")
-    public Map<String, String> getOne(@PathVariable String id) {
+    public Message getOne(@PathVariable String id) {
         return getMessage(id);
     }
 
@@ -52,8 +51,8 @@ public class MessageController {
      * @return new created message
      */
     @PostMapping
-    public Map<String, String> create(@RequestBody Map<String, String> message) {
-        message.put("id", String.valueOf(counter++));
+    public Message create(@RequestBody Message message) {
+        message.setId(String.valueOf(counter++));
 
         messages.add(message);
 
@@ -67,11 +66,11 @@ public class MessageController {
      * @return - updated message
      */
     @PutMapping("{id}")
-    public Map<String, String> update(@PathVariable String id,  @RequestBody Map<String, String> message) {
-        Map<String, String> messageFromDb = getMessage(id);
+    public Message update(@PathVariable String id,  @RequestBody Message message) {
+        Message messageFromDb = getMessage(id);
 
-        messageFromDb.putAll(message);
-        messageFromDb.put("id", id);
+        messageFromDb.setText(message.getText());
+        messageFromDb.setId(id);
 
         return messageFromDb;
     }
@@ -82,19 +81,19 @@ public class MessageController {
      */
     @DeleteMapping("{id}")
     public void delete(@PathVariable String id) {
-        Map<String, String> message = getMessage(id);
+        Message message = getMessage(id);
 
         messages.remove(message);
     }
 
     /**
      * Get one message by id
-     * @param id - String id
+     * @param inputId - String id
      * @return - message object
      */
-    private Map<String, String> getMessage(String id) {
+    private Message getMessage(String inputId) {
         return messages.stream()
-                .filter(message -> message.get("id").equals(id))
+                .filter(message -> message.getId().equals(inputId))
                 .findFirst()
                 .orElseThrow(NotFoundExeption::new);
     }
