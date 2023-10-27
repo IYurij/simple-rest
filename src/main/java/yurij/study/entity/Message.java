@@ -23,7 +23,7 @@ public class Message {
         return text;
     }
 
-    private void setText(String text) {
+    public void setText(String text) {
         this.text = text;
     }
 }

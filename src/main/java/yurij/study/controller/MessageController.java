@@ -1,6 +1,7 @@
 package yurij.study.controller;
 
 import org.springframework.web.bind.annotation.*;
+import yurij.study.entity.Message;
 import yurij.study.exceptions.NotFoundExeption;
 
 import java.util.ArrayList;
@@ -21,10 +22,10 @@ public class MessageController {
     /**
      * Base data stub.
      */
-    private final List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {{
-        add(new HashMap<String, String>() {{ put("id", "1"); put("text", "First message."); }});
-        add(new HashMap<String, String>() {{ put("id", "2"); put("text", "Second message."); }});
-        add(new HashMap<String, String>() {{ put("id", "3"); put("text", "Third message."); }});
+    private final List<Message> messages = new ArrayList<>() {{
+        add(new Message() {{ setId("1"); setText("First message."); }});
+        add(new Message() {{ setId("2"); setText("Second message."); }});
+        add(new Message() {{ setId("3"); setText("Third message."); }});
     }};
 
     /**
