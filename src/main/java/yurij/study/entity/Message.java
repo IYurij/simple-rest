@@ -11,6 +11,10 @@ public class Message {
 
     }
 
+    public Message(String id, String text) {
+        this.id = id;
+        this.text = text;
+    }
     public String getId() {
         return id;
     }
