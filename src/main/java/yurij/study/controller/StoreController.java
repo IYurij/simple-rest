@@ -1,5 +1,6 @@
 package yurij.study.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import yurij.study.entity.StoreEntry;
 import yurij.study.services.InMemoryKeyValueStore;
@@ -12,6 +13,7 @@ import yurij.study.services.InMemoryKeyValueStore;
 public class StoreController {
     private final InMemoryKeyValueStore inMemoryKeyValueStore;
 
+    @Autowired
     public StoreController(InMemoryKeyValueStore inMemoryKeyValueStore) {
         this.inMemoryKeyValueStore = inMemoryKeyValueStore;
     }

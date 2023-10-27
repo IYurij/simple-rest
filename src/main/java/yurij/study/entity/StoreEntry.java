@@ -1,5 +1,8 @@
 package yurij.study.entity;
 
+/**
+ * Store object class.
+ */
 public class StoreEntry {
     private String key;
     private String value;
