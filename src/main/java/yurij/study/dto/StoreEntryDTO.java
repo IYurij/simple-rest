@@ -1,17 +1,17 @@
-package yurij.study.entity;
+package yurij.study.dto;
 
 /**
- * Store object class.
+ * StoreEntry DTO class.
  */
-public class StoreEntry {
+public class StoreEntryDTO {
     private String key;
     private String value;
 
-    public StoreEntry() {
+    public StoreEntryDTO() {
 
     }
 
-    public StoreEntry(String key, String value) {
+    public StoreEntryDTO(String key, String value) {
         this.key = key;
         this.value = value;
     }
