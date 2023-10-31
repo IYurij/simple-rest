@@ -3,6 +3,7 @@ package yurij.study.services;
 import org.springframework.stereotype.Service;
 import yurij.study.entity.StoreEntryEntity;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 
 /**
@@ -11,7 +12,7 @@ import java.util.HashMap;
 @Service
 public class InMemoryKeyValueStore {
 
-    private final HashMap<String, String> store = new HashMap<String, String>();
+    private final HashMap<String, String> store = new HashMap<>();
 
     /**
      * Add key/value pair to the storage.
@@ -28,7 +29,7 @@ public class InMemoryKeyValueStore {
      * @param key String
      * @return String
      */
-    public StoreEntryEntity get(String key) {
+    public @Nullable StoreEntryEntity get(String key) {
         String value = store.get(key);
 
         return new StoreEntryEntity(key, value);

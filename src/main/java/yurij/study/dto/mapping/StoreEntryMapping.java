@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import yurij.study.dto.StoreEntryDTO;
 import yurij.study.entity.StoreEntryEntity;
 
+import javax.annotation.Nonnull;
+
 /**
  * Mapping component for StoreEntry objects.
  */
@@ -14,7 +16,7 @@ public class StoreEntryMapping {
      * @param entity StoreEntryEntity object
      * @return StoreEntryDTO object
      */
-    public StoreEntryDTO toDTO(StoreEntryEntity entity) {
+    public StoreEntryDTO toDTO(@Nonnull StoreEntryEntity entity) {
         return new StoreEntryDTO(
                 entity.getKey(),
                 entity.getValue()

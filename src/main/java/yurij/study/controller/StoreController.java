@@ -7,6 +7,8 @@ import yurij.study.dto.mapping.StoreEntryMapping;
 import yurij.study.entity.StoreEntryEntity;
 import yurij.study.services.InMemoryKeyValueStore;
 
+import java.util.Objects;
+
 /**
  * API InMemoryStore controller class
  */
@@ -14,12 +16,12 @@ import yurij.study.services.InMemoryKeyValueStore;
 @RequestMapping("store")
 public class StoreController {
     private final InMemoryKeyValueStore inMemoryKeyValueStore;
-    private final StoreEntryMapping mapping;
+    private final StoreEntryMapping storeEntryMapping;
 
     @Autowired
     public StoreController(InMemoryKeyValueStore inMemoryKeyValueStore, StoreEntryMapping storeEntryMapping) {
         this.inMemoryKeyValueStore = inMemoryKeyValueStore;
-        mapping = storeEntryMapping;
+        this.storeEntryMapping = storeEntryMapping;
     }
 
     /**
@@ -29,7 +31,13 @@ public class StoreController {
      */
     @GetMapping("{key}")
     public StoreEntryDTO getOne(@PathVariable String key) {
-        return mapping.toDTO(inMemoryKeyValueStore.get(key));
+        StoreEntryEntity entity = inMemoryKeyValueStore.get(key);
+
+        if (entity == null) {
+            return null;
+        }
+
+        return storeEntryMapping.toDTO(entity);
     }
 
     /**
@@ -39,9 +47,9 @@ public class StoreController {
      */
     @PostMapping
     public StoreEntryDTO putOne(@RequestBody StoreEntryDTO entry) {
-        StoreEntryEntity entity = mapping.toEntity(entry);
+        StoreEntryEntity entity = storeEntryMapping.toEntity(entry);
 
-        return mapping.toDTO(inMemoryKeyValueStore.put(entity));
+        return storeEntryMapping.toDTO(inMemoryKeyValueStore.put(entity));
     }
 
     /**
