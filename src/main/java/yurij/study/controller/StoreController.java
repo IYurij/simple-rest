@@ -43,10 +43,6 @@ public class StoreController {
      */
     @PostMapping
     public StoreEntryDTO putOne(@RequestBody StoreEntryDTO entry) {
-        if (entry == null) {
-            return null;
-        }
-
         StoreEntryEntity entity = storeEntryMapping.toEntity(entry);
 
         return storeEntryMapping.toDTO(inMemoryKeyValueStore.put(entity));
