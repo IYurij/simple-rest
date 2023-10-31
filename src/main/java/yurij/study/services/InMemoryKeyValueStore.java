@@ -18,7 +18,7 @@ public class InMemoryKeyValueStore {
      * Add key/value pair to the storage.
      * @param entity StoreEntryEntity input object
      */
-    public StoreEntryEntity put(StoreEntryEntity entity) {
+    public synchronized StoreEntryEntity put(StoreEntryEntity entity) {
         store.put(entity.getKey(), entity.getValue());
 
         return entity;
@@ -29,7 +29,7 @@ public class InMemoryKeyValueStore {
      * @param key String
      * @return String
      */
-    public StoreEntryEntity get(String key) {
+    public synchronized StoreEntryEntity get(String key) {
         String value = store.get(key);
 
         return new StoreEntryEntity(key, value);
@@ -39,7 +39,7 @@ public class InMemoryKeyValueStore {
      * Remove value by key
      * @param key String
      */
-    public void remove(String key) {
+    public synchronized void remove(String key) {
         store.remove(key);
     }
 }
