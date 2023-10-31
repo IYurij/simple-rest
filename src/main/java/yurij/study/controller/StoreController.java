@@ -2,8 +2,12 @@ package yurij.study.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import yurij.study.entity.StoreEntry;
+import yurij.study.dto.StoreEntryDTO;
+import yurij.study.dto.mapping.StoreEntryMapping;
+import yurij.study.entity.StoreEntryEntity;
 import yurij.study.services.InMemoryKeyValueStore;
+
+import java.util.Objects;
 
 /**
  * API InMemoryStore controller class
@@ -12,10 +16,12 @@ import yurij.study.services.InMemoryKeyValueStore;
 @RequestMapping("store")
 public class StoreController {
     private final InMemoryKeyValueStore inMemoryKeyValueStore;
+    private final StoreEntryMapping storeEntryMapping;
 
     @Autowired
-    public StoreController(InMemoryKeyValueStore inMemoryKeyValueStore) {
+    public StoreController(InMemoryKeyValueStore inMemoryKeyValueStore, StoreEntryMapping storeEntryMapping) {
         this.inMemoryKeyValueStore = inMemoryKeyValueStore;
+        this.storeEntryMapping = storeEntryMapping;
     }
 
     /**
@@ -24,8 +30,10 @@ public class StoreController {
      * @return StoryEntry object
      */
     @GetMapping("{key}")
-    public StoreEntry getOne(@PathVariable String key) {
-        return inMemoryKeyValueStore.get(key);
+    public StoreEntryDTO getOne(@PathVariable String key) {
+        StoreEntryEntity entity = inMemoryKeyValueStore.get(key);
+
+        return storeEntryMapping.toDTO(entity);
     }
 
     /**
@@ -34,8 +42,10 @@ public class StoreController {
      * @return StoreEntry object
      */
     @PostMapping
-    public StoreEntry putOne(@RequestBody StoreEntry entry) {
-        return inMemoryKeyValueStore.put(entry.getKey(), entry.getValue());
+    public StoreEntryDTO putOne(@RequestBody StoreEntryDTO entry) {
+        StoreEntryEntity entity = storeEntryMapping.toEntity(entry);
+
+        return storeEntryMapping.toDTO(inMemoryKeyValueStore.put(entity));
     }
 
     /**
