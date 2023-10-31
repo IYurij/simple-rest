@@ -33,10 +33,6 @@ public class StoreController {
     public StoreEntryDTO getOne(@PathVariable String key) {
         StoreEntryEntity entity = inMemoryKeyValueStore.get(key);
 
-        if (entity == null) {
-            return null;
-        }
-
         return storeEntryMapping.toDTO(entity);
     }
 

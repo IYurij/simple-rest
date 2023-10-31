@@ -29,7 +29,7 @@ public class InMemoryKeyValueStore {
      * @param key String
      * @return String
      */
-    public @Nullable StoreEntryEntity get(String key) {
+    public StoreEntryEntity get(String key) {
         String value = store.get(key);
 
         return new StoreEntryEntity(key, value);
