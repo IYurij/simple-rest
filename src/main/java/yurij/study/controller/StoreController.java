@@ -33,11 +33,9 @@ public class StoreController {
      */
     @GetMapping()
     public List<StoreEntryDTO> getAll() {
-        ArrayList<StoreEntryEntity> entityList = inMemoryKeyValueStore.getAll();
+        ArrayList<StoreEntryEntity> entitiesArrayList = inMemoryKeyValueStore.getAll();
 
-        return entityList.stream()
-                .map(entity -> new StoreEntryDTO(entity.getKey(), entity.getValue()))
-                .toList();
+        return storeEntryMapping.toDTOList(entitiesArrayList);
     }
 
     /**

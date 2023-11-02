@@ -5,6 +5,8 @@ import yurij.study.dto.StoreEntryDTO;
 import yurij.study.entity.StoreEntryEntity;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Mapping component for StoreEntry objects.
@@ -13,6 +15,7 @@ import javax.annotation.Nonnull;
 public class StoreEntryMapping {
     /**
      * Convert from entity to dto.
+     *
      * @param entity StoreEntryEntity object
      * @return StoreEntryDTO object
      */
@@ -26,13 +29,27 @@ public class StoreEntryMapping {
 
     /**
      * Convert from dto to entity.
+     *
      * @param dto StoreEntryDTO object
      * @return StoreEntryEntity object
      */
     public StoreEntryEntity toEntity(StoreEntryDTO dto) {
-        return  new StoreEntryEntity(
+        return new StoreEntryEntity(
                 dto.getKey(),
                 dto.getValue()
         );
+    }
+
+    /**
+     * Convert from entitiesList to DTOList
+     *
+     * @param entityArrayList entities list
+     * @return dto's list
+     */
+    public List<StoreEntryDTO> toDTOList(ArrayList<StoreEntryEntity> entityArrayList) {
+
+        return entityArrayList.stream()
+                .map(this::toDTO)
+                .toList();
     }
 }
