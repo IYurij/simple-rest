@@ -1,10 +1,10 @@
 package yurij.study.services;
 
 import org.springframework.stereotype.Service;
+import yurij.study.dto.StoreEntryDTO;
 import yurij.study.entity.StoreEntryEntity;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * InMemory storage base implementation.
@@ -16,6 +16,7 @@ public class InMemoryKeyValueStore {
 
     /**
      * Add key/value pair to the storage.
+     *
      * @param entity StoreEntryEntity input object
      */
     public synchronized StoreEntryEntity put(StoreEntryEntity entity) {
@@ -26,6 +27,7 @@ public class InMemoryKeyValueStore {
 
     /**
      * Get value by key.
+     *
      * @param key String
      * @return String
      */
@@ -36,10 +38,30 @@ public class InMemoryKeyValueStore {
     }
 
     /**
-     * Remove value by key
+     * Remove value by key.
+     *
      * @param key String
      */
     public synchronized void remove(String key) {
         store.remove(key);
+    }
+
+    /**
+     * Get all cached objects.
+     *
+     * @return new ArrayList with data
+     */
+    public synchronized ArrayList<StoreEntryDTO> getAll() {
+
+        ArrayList<StoreEntryDTO> dataList = new ArrayList<>();
+
+        for (Map.Entry<String, String> entry : store.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            dataList.add(new StoreEntryDTO(key, value));
+        }
+
+        return dataList;
     }
 }
