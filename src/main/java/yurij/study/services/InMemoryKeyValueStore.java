@@ -51,15 +51,15 @@ public class InMemoryKeyValueStore {
      *
      * @return new ArrayList with data
      */
-    public synchronized ArrayList<StoreEntryDTO> getAll() {
+    public synchronized ArrayList<StoreEntryEntity> getAll() {
 
-        ArrayList<StoreEntryDTO> dataList = new ArrayList<>();
+        ArrayList<StoreEntryEntity> dataList = new ArrayList<>();
 
         for (Map.Entry<String, String> entry : store.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
 
-            dataList.add(new StoreEntryDTO(key, value));
+            dataList.add(new StoreEntryEntity(key, value));
         }
 
         return dataList;

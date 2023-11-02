@@ -8,6 +8,8 @@ import yurij.study.entity.StoreEntryEntity;
 import yurij.study.services.InMemoryKeyValueStore;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * API InMemoryStore controller class
@@ -27,11 +29,15 @@ public class StoreController {
     /**
      * Return all cached key/values.
      *
-     * @return ArrayList
+     * @return DTO's List
      */
     @GetMapping()
-    public ArrayList<StoreEntryDTO> getAll() {
-        return inMemoryKeyValueStore.getAll();
+    public List<StoreEntryDTO> getAll() {
+        ArrayList<StoreEntryEntity> entityList = inMemoryKeyValueStore.getAll();
+
+        return entityList.stream()
+                .map(entity -> new StoreEntryDTO(entity.getKey(), entity.getValue()))
+                .toList();
     }
 
     /**
