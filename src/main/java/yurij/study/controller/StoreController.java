@@ -7,7 +7,9 @@ import yurij.study.dto.mapping.StoreEntryMapping;
 import yurij.study.entity.StoreEntryEntity;
 import yurij.study.services.InMemoryKeyValueStore;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * API InMemoryStore controller class
@@ -25,7 +27,20 @@ public class StoreController {
     }
 
     /**
+     * Return all cached key/values.
+     *
+     * @return DTO's List
+     */
+    @GetMapping()
+    public List<StoreEntryDTO> getAll() {
+        ArrayList<StoreEntryEntity> entitiesArrayList = inMemoryKeyValueStore.getAll();
+
+        return storeEntryMapping.toDTOList(entitiesArrayList);
+    }
+
+    /**
      * Get value by key.
+     *
      * @param key String
      * @return StoryEntry object
      */
@@ -37,7 +52,8 @@ public class StoreController {
     }
 
     /**
-     * Add new key/value pair
+     * Add new key/value pair.
+     *
      * @param entry input object
      * @return StoreEntry object
      */
@@ -50,6 +66,7 @@ public class StoreController {
 
     /**
      * Delete Store data by key.
+     *
      * @param key String
      */
     @DeleteMapping("{key}")
