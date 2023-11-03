@@ -6,14 +6,16 @@ package yurij.study.entity;
 public class StoreEntryEntity {
     private String key;
     private String value;
+    private long expiryTimestamp;
 
     public StoreEntryEntity() {
 
     }
 
-    public StoreEntryEntity(String key, String value) {
+    public StoreEntryEntity(String key, String value, long expiryTimestamp) {
         this.key = key;
         this.value = value;
+        this.expiryTimestamp = expiryTimestamp;
     }
 
     public String getKey() {
@@ -30,5 +32,13 @@ public class StoreEntryEntity {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public long getExpiryTimestamp() {
+        return expiryTimestamp;
+    }
+
+    public void setExpiryTimestamp(long expiryTimestamp) {
+        this.expiryTimestamp = expiryTimestamp;
     }
 }

@@ -9,6 +9,8 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Mapping component for StoreEntry objects.
  */
@@ -35,9 +37,12 @@ public class StoreEntryMapping {
      * @return StoreEntryEntity object
      */
     public StoreEntryEntity toEntity(StoreEntryRequestDTO dto) {
+        long currentTimeInMs = currentTimeMillis();
+
         return new StoreEntryEntity(
                 dto.getKey(),
-                dto.getValue()
+                dto.getValue(),
+                currentTimeInMs + dto.getTtl()
         );
     }
 

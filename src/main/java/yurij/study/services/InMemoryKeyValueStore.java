@@ -33,7 +33,7 @@ public class InMemoryKeyValueStore {
     public synchronized StoreEntryEntity get(String key) {
         String value = store.get(key);
 
-        return new StoreEntryEntity(key, value);
+        return new StoreEntryEntity(key, value, expiryTimestamp);
     }
 
     /**
