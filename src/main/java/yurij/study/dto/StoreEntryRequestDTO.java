@@ -3,15 +3,15 @@ package yurij.study.dto;
 /**
  * StoreEntry DTO class.
  */
-public class StoreEntryDTO {
+public class StoreEntryRequestDTO {
     private String key;
     private String value;
 
-    public StoreEntryDTO() {
+    public StoreEntryRequestDTO() {
 
     }
 
-    public StoreEntryDTO(String key, String value) {
+    public StoreEntryRequestDTO(String key, String value) {
         this.key = key;
         this.value = value;
     }

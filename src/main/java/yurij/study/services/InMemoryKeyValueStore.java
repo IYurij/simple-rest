@@ -1,7 +1,6 @@
 package yurij.study.services;
 
 import org.springframework.stereotype.Service;
-import yurij.study.dto.StoreEntryDTO;
 import yurij.study.entity.StoreEntryEntity;
 
 import java.util.*;

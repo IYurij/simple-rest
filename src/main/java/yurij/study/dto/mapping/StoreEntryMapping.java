@@ -1,7 +1,8 @@
 package yurij.study.dto.mapping;
 
 import org.springframework.stereotype.Component;
-import yurij.study.dto.StoreEntryDTO;
+import yurij.study.dto.StoreEntryRequestDTO;
+import yurij.study.dto.StoreEntryResponseDTO;
 import yurij.study.entity.StoreEntryEntity;
 
 import javax.annotation.Nonnull;
@@ -19,8 +20,8 @@ public class StoreEntryMapping {
      * @param entity StoreEntryEntity object
      * @return StoreEntryDTO object
      */
-    public StoreEntryDTO toDTO(@Nonnull StoreEntryEntity entity) {
-        return new StoreEntryDTO(
+    public StoreEntryResponseDTO toDTO(@Nonnull StoreEntryEntity entity) {
+        return new StoreEntryResponseDTO(
                 entity.getKey(),
                 entity.getValue()
         );
@@ -33,7 +34,7 @@ public class StoreEntryMapping {
      * @param dto StoreEntryDTO object
      * @return StoreEntryEntity object
      */
-    public StoreEntryEntity toEntity(StoreEntryDTO dto) {
+    public StoreEntryEntity toEntity(StoreEntryRequestDTO dto) {
         return new StoreEntryEntity(
                 dto.getKey(),
                 dto.getValue()
@@ -46,7 +47,7 @@ public class StoreEntryMapping {
      * @param entityArrayList entities list
      * @return dto's list
      */
-    public List<StoreEntryDTO> toDTOList(ArrayList<StoreEntryEntity> entityArrayList) {
+    public List<StoreEntryResponseDTO> toDTOList(ArrayList<StoreEntryEntity> entityArrayList) {
 
         return entityArrayList.stream()
                 .map(this::toDTO)
