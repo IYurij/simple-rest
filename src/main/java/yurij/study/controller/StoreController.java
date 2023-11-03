@@ -2,14 +2,14 @@ package yurij.study.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import yurij.study.dto.StoreEntryDTO;
+import yurij.study.dto.StoreEntryRequestDTO;
+import yurij.study.dto.StoreEntryResponseDTO;
 import yurij.study.dto.mapping.StoreEntryMapping;
 import yurij.study.entity.StoreEntryEntity;
 import yurij.study.services.InMemoryKeyValueStore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * API InMemoryStore controller class
@@ -32,7 +32,7 @@ public class StoreController {
      * @return DTO's List
      */
     @GetMapping()
-    public List<StoreEntryDTO> getAll() {
+    public List<StoreEntryResponseDTO> getAll() {
         ArrayList<StoreEntryEntity> entitiesArrayList = inMemoryKeyValueStore.getAll();
 
         return storeEntryMapping.toDTOList(entitiesArrayList);
@@ -45,7 +45,7 @@ public class StoreController {
      * @return StoryEntry object
      */
     @GetMapping("{key}")
-    public StoreEntryDTO getOne(@PathVariable String key) {
+    public StoreEntryResponseDTO getOne(@PathVariable String key) {
         StoreEntryEntity entity = inMemoryKeyValueStore.get(key);
 
         return storeEntryMapping.toDTO(entity);
@@ -58,7 +58,7 @@ public class StoreController {
      * @return StoreEntry object
      */
     @PostMapping
-    public StoreEntryDTO putOne(@RequestBody StoreEntryDTO entry) {
+    public StoreEntryResponseDTO putOne(@RequestBody StoreEntryRequestDTO entry) {
         StoreEntryEntity entity = storeEntryMapping.toEntity(entry);
 
         return storeEntryMapping.toDTO(inMemoryKeyValueStore.put(entity));
