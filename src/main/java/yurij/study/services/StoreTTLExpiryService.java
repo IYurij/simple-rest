@@ -7,18 +7,17 @@ import org.springframework.stereotype.Service;
 public class StoreTTLExpiryService {
     @PostConstruct
     private void startThread() throws InterruptedException {
-        Thread myThread = new Thread("MyThread");
+        Thread myThread = new Thread(this::myMethod,"MyThread");
         myThread.start();
-
-        while (true) {
-            myMethod();
-        }
     }
 
     private void myMethod() {
         try{
-            System.out.println("StoreTTLExpiryService iteration executed");
-            Thread.sleep(5000);
+            while (true) {
+                System.out.println("StoreTTLExpiryService iteration executed");
+                Thread.sleep(5000);
+            }
+
         }
         catch(InterruptedException e){
             System.out.println("Thread has been interrupted");
