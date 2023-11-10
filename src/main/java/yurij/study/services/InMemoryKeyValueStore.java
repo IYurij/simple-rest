@@ -11,7 +11,7 @@ import java.util.*;
 @Service
 public class InMemoryKeyValueStore {
 
-    private final HashMap<String, String> store = new HashMap<>();
+    private final HashMap<String, StoreEntryEntity> store = new HashMap<>();
 
     /**
      * Add key/value pair to the storage.
@@ -19,7 +19,7 @@ public class InMemoryKeyValueStore {
      * @param entity StoreEntryEntity input object
      */
     public synchronized StoreEntryEntity put(StoreEntryEntity entity) {
-        store.put(entity.getKey(), entity.getValue());
+        store.put(entity.getKey(), entity);
 
         return entity;
     }
@@ -31,9 +31,8 @@ public class InMemoryKeyValueStore {
      * @return String
      */
     public synchronized StoreEntryEntity get(String key) {
-        String value = store.get(key);
 
-        return new StoreEntryEntity(key, value);
+        return store.get(key);
     }
 
     /**
@@ -54,11 +53,10 @@ public class InMemoryKeyValueStore {
 
         ArrayList<StoreEntryEntity> dataList = new ArrayList<>();
 
-        for (Map.Entry<String, String> entry : store.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
+        for (Map.Entry<String, StoreEntryEntity> entry : store.entrySet()) {
+            StoreEntryEntity value = entry.getValue();
 
-            dataList.add(new StoreEntryEntity(key, value));
+            dataList.add(value);
         }
 
         return dataList;
