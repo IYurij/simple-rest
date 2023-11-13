@@ -64,9 +64,12 @@ public class InMemoryKeyValueStore {
         return dataList;
     }
 
+    /**
+     * Remove expired entries.
+     */
     public synchronized void removeExpiredEntries() {
         for (Map.Entry<String, StoreEntryEntity> entry : store.entrySet()) {
-            if (entry.getValue().getExpiryTimestamp() > currentTimeMillis()) {
+            if (entry.getValue().getExpiryTimestamp() < currentTimeMillis()) {
                 store.remove(entry.getKey());
             }
         }
