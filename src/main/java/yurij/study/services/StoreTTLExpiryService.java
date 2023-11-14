@@ -2,6 +2,7 @@ package yurij.study.services;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +13,7 @@ public class StoreTTLExpiryService {
     /**
      * Thread sleep time.
      */
-    public final int SLEEP_TIME = 100;
+    private final long sleepTimeMillis;
 
     private final InMemoryKeyValueStore inMemoryKeyValueStore;
 
@@ -23,28 +24,30 @@ public class StoreTTLExpiryService {
      */
     @PostConstruct
     private void startThread() throws InterruptedException {
-        Thread myThread = new Thread(this::removeExpiredThread,"removeExpiredThread");
+        Thread myThread = new Thread(this::removeExpiredThread, "removeExpiredThread");
         myThread.start();
     }
 
     @Autowired
-    public StoreTTLExpiryService(InMemoryKeyValueStore inMemoryKeyValueStore) {
+    public StoreTTLExpiryService(@Value("${store.ttl.expiry.sleep_time_ms}") long sleepTimeMillis,
+                                 InMemoryKeyValueStore inMemoryKeyValueStore) {
+        this.sleepTimeMillis = sleepTimeMillis;
         this.inMemoryKeyValueStore = inMemoryKeyValueStore;
+        System.out.println(sleepTimeMillis);
     }
 
     /**
      * Thread method
      */
     private void removeExpiredThread() {
-        try{
+        try {
             while (true) {
                 inMemoryKeyValueStore.removeExpiredEntries();
 
-                Thread.sleep(SLEEP_TIME);
+                Thread.sleep(sleepTimeMillis);
             }
 
-        }
-        catch(InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println("Thread has been interrupted");
         }
         System.out.printf("%s finished... \n", Thread.currentThread().getName());
