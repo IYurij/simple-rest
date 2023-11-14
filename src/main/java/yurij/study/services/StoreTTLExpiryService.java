@@ -3,7 +3,6 @@ package yurij.study.services;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,6 +33,7 @@ public class StoreTTLExpiryService {
                                  InMemoryKeyValueStore inMemoryKeyValueStore) {
         this.sleepTimeMillis = sleepTimeMillis;
         this.inMemoryKeyValueStore = inMemoryKeyValueStore;
+        System.out.println(sleepTimeMillis);
     }
 
     /**
