@@ -25,6 +25,7 @@ public class StoreTTLExpiryService {
     @PostConstruct
     private void startThread() throws InterruptedException {
         Thread myThread = new Thread(this::removeExpiredThread, "removeExpiredThread");
+        myThread.setDaemon(true);
         myThread.start();
     }
 
