@@ -37,13 +37,13 @@ class InMemoryKeyValueStoreTest {
     @Test
     void get_entry_by_key() {
         //Arrange
-        String expectedEntryKey = "test";
+        String expectedEntryWithKey = "test";
 
         //Act
         StoreEntryEntity actual = store.get("test");
 
         //Assert
-        Assertions.assertEquals(expectedEntryKey, "test");
+        Assertions.assertEquals(expectedEntryWithKey, actual.getKey());
     }
 
     @Test
