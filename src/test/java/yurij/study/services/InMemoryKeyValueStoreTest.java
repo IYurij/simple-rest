@@ -11,12 +11,15 @@ class InMemoryKeyValueStoreTest {
     @Value("${store.ttl.expiry.sleep_time_ms}")
     private long sleepTimeMills;
 
+    private StoreEntryEntity newEntry;
+
     @BeforeEach
     void setUp() {
         store = new InMemoryKeyValueStore();
 
         StoreEntryEntity entity = new StoreEntryEntity("test", "value", 100);
         StoreEntryEntity entity2 = new StoreEntryEntity("test2", "value2", 100);
+        newEntry = new StoreEntryEntity("test3", "value3", 100);
 
         store.put(entity);
         store.put(entity2);
@@ -25,7 +28,7 @@ class InMemoryKeyValueStoreTest {
     @Test
     void put_new_entry() {
         //Arrange
-        StoreEntryEntity actual = new StoreEntryEntity("test3", "value3", 100);
+        StoreEntryEntity actual = newEntry;
 
         //Act
         StoreEntryEntity expected = store.put(actual);
@@ -44,6 +47,30 @@ class InMemoryKeyValueStoreTest {
 
         //Assert
         Assertions.assertEquals(expectedEntryWithKey, actual.getKey());
+    }
+
+    @Test
+    void get_entry_by_key_and_verify_value() {
+        //Arrange
+        String expectedValue = "value3";
+
+        //Act
+        StoreEntryEntity actual = store.put(newEntry);
+
+        //Assert
+        Assertions.assertEquals(expectedValue, actual.getValue());
+    }
+
+    @Test
+    void get_entry_by_key_and_verify_expiry() {
+        //Arrange
+        long expectedExpiryTimestamp = 100;
+
+        //Act
+        StoreEntryEntity actual = store.put(newEntry);
+
+        //Assert
+        Assertions.assertEquals(expectedExpiryTimestamp, actual.getExpiryTimestamp());
     }
 
     @Test
