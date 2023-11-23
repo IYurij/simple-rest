@@ -2,32 +2,32 @@ package yurij.study.services;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import yurij.study.entity.StoreEntryEntity;
 
 class InMemoryKeyValueStoreTest {
     private InMemoryKeyValueStore store;
+    private StoreEntryEntity newEntry;
     @Value("${store.ttl.expiry.sleep_time_ms}")
     private long sleepTimeMills;
-
-    private StoreEntryEntity newEntry;
 
     @BeforeEach
     void setUp() {
         store = new InMemoryKeyValueStore();
-
         newEntry = new StoreEntryEntity("test3", "value3", 100);
 
         StoreEntryEntity entity = new StoreEntryEntity("test", "value", 100);
         StoreEntryEntity entity2 = new StoreEntryEntity("test2", "value2", 100);
-        
+
         store.put(entity);
         store.put(entity2);
     }
 
     @Test
-    void put_new_entry() {
+    @DisplayName("Put new entry")
+    void putNewEntry() {
         //Arrange
         StoreEntryEntity actual = newEntry;
 
@@ -39,7 +39,8 @@ class InMemoryKeyValueStoreTest {
     }
 
     @Test
-    void get_entry_by_key() {
+    @DisplayName("Get entry by key")
+    void getEntryByKey() {
         //Arrange
         String expectedEntryWithKey = "test";
 
@@ -51,7 +52,8 @@ class InMemoryKeyValueStoreTest {
     }
 
     @Test
-    void get_entry_by_key_and_verify_value() {
+    @DisplayName("Get entry by key and verify value")
+    void getEntryByKeyAndVerifyValue() {
         //Arrange
         String expectedValue = "value3";
 
@@ -63,7 +65,8 @@ class InMemoryKeyValueStoreTest {
     }
 
     @Test
-    void get_entry_by_key_and_verify_expiry() {
+    @DisplayName("Get entry by key and verify expiry timestamp")
+    void getEntryByKeyAndVerifyExpiry() {
         //Arrange
         long expectedExpiryTimestamp = 100;
 
@@ -75,7 +78,8 @@ class InMemoryKeyValueStoreTest {
     }
 
     @Test
-    void remove_entry_by_key() {
+    @DisplayName("Remove entry by key")
+    void removeEntryByKey() {
         //Arrange
         int expectedEntriesCount = 1;
 
@@ -88,7 +92,8 @@ class InMemoryKeyValueStoreTest {
     }
 
     @Test
-    void getAll_entries() {
+    @DisplayName("Get all entries")
+    void getAllEntries() {
         //Arrange
         int expectedEntriesCount = 2;
 
@@ -100,6 +105,7 @@ class InMemoryKeyValueStoreTest {
     }
 
     @Test
+    @DisplayName("Remove expired entries")
     void removeExpiredEntries() throws InterruptedException {
         //Arrange
         int expectedEntriesCount = 0;
