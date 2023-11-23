@@ -17,10 +17,11 @@ class InMemoryKeyValueStoreTest {
     void setUp() {
         store = new InMemoryKeyValueStore();
 
-        StoreEntryEntity entity = new StoreEntryEntity("test", "value", 100);
-        StoreEntryEntity entity2 = new StoreEntryEntity("test2", "value2", 100);
         newEntry = new StoreEntryEntity("test3", "value3", 100);
 
+        StoreEntryEntity entity = new StoreEntryEntity("test", "value", 100);
+        StoreEntryEntity entity2 = new StoreEntryEntity("test2", "value2", 100);
+        
         store.put(entity);
         store.put(entity2);
     }
